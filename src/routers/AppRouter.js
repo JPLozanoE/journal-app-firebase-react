@@ -1,17 +1,57 @@
-import React from 'react'
+import {React,useEffect, useState} from 'react'
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
+import { AuthRouter } from './AuthRouter';
+import { JournalScreen } from './../components/journal/JournalScreen';
+import { useDispatch } from 'react-redux';
+import {firebase} from '../firebase/firebase-config'
+import {login} from '../actions/auth'
+import { LoadingScreen } from './../components/misc/LoadingScreen';
+import { PublicRoute } from './PublicRoute';
+import { PrivateRoute } from './PrivateRoute';
 
 export const AppRouter = () => {
-    return (
-        <div>
-            {/* Crear una ruta que tenga un path que apunte a /auth
-            NO es exacto
-            el componente que va a puntar es = a {AuthRouter}
-             */}
+    const dispatch = useDispatch();
+    const [checking, setChecking] = useState(true)
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    useEffect(() => {
+        
+        firebase.auth().onAuthStateChanged((user)=>{
+            if(user?.uid){
+                dispatch(login(user.uid,user.displayName));
+                setIsLoggedIn(true);
+            }
+            else{
+                setIsLoggedIn(false);
+            }
+            setChecking(false);
+        })
+    }, [dispatch,setChecking,setIsLoggedIn])
 
-             {/* 
-                apuntar con exact a path="/"
-                component = {JournalScreen}
-              */}
+    if(checking){return(
+        <LoadingScreen/>
+    )}
+
+
+    return (
+        <Router>
+        <div>
+            <Switch>
+                <PublicRoute 
+                    path="/auth" 
+                    component={AuthRouter} 
+                    isAuth={isLoggedIn}
+                />
+                
+                <PrivateRoute 
+                    exact 
+                    path="/" 
+                    component={JournalScreen}
+                    isAuth={isLoggedIn}
+                />
+
+            <Redirect to="auth/login"/>
+            </Switch>
         </div>
+        </Router>
     )
 }
