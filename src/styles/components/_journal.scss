@@ -57,8 +57,10 @@
     color: $dark-grey;
     cursor: pointer;
     display: flex;
+    justify-content: space-between;
     margin-bottom: 10px;
     overflow:hidden;
+
 
     transition: transform 250ms;
 

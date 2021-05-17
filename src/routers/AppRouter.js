@@ -8,6 +8,8 @@ import {login} from '../actions/auth'
 import { LoadingScreen } from './../components/misc/LoadingScreen';
 import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
+// import { loadNotes } from './../helpers/loadNotes';
+import {  startLoadingNotes } from './../actions/notes';
 
 export const AppRouter = () => {
     const dispatch = useDispatch();
@@ -19,6 +21,8 @@ export const AppRouter = () => {
             if(user?.uid){
                 dispatch(login(user.uid,user.displayName));
                 setIsLoggedIn(true);
+                // console.log(notes);
+                dispatch(startLoadingNotes(user.uid));
             }
             else{
                 setIsLoggedIn(false);
