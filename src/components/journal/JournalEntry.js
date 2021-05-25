@@ -12,7 +12,7 @@ export const JournalEntry = ({id,date,title,body,url}) => {
     }
 
     return (
-        <div className="journal__entry"
+        <div className="journal__entry animate__animated animate__slideInLeft animate__faster"
             onClick={handleClick}
         >
             <div style={{display:'flex',}}>
