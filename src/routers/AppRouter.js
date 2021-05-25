@@ -1,5 +1,5 @@
 import {React,useEffect, useState} from 'react'
-import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Switch} from "react-router-dom";
 import { AuthRouter } from './AuthRouter';
 import { JournalScreen } from './../components/journal/JournalScreen';
 import { useDispatch } from 'react-redux';
