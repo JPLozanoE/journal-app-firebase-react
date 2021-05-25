@@ -15,6 +15,7 @@ export const JournalEntry = ({id,date,title,body,url}) => {
         <div className="journal__entry"
             onClick={handleClick}
         >
+            <div style={{display:'flex',}}>
         
             {
                 (url)&&            
@@ -37,6 +38,8 @@ export const JournalEntry = ({id,date,title,body,url}) => {
                     {body}
                 </p>
 
+            </div>
+                
             </div>
             <div className="journal__entry-date-box">
                 <span>{noteDate.format('dddd')}</span>
